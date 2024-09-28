@@ -7,6 +7,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,6 +17,9 @@ import org.testng.annotations.Test;
 import javax.swing.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static helper.Pages.*;
 
@@ -85,21 +89,11 @@ public class TestDrive {
 
         WebElement source= driver.findElement(By.id("myImage"));
         WebElement target= driver.findElement(By.id("targetDiv"));
+
         //DemoHelper.pause();
 
         act.scrollToElement(source).perform();
-
         act.dragAndDrop(source,target).perform();
-
-        String highlight= target.getCssValue("background-color"), fieldText= target.getText();
-        System.out.println("Highlight: "+highlight);
-
-        if (fieldText.equals("Dropped!")){
-            System.out.println("Pass");
-        }
-        else {
-            System.out.println("Drop Failed.");
-        }
 
         driver.close();
 
@@ -107,11 +101,49 @@ public class TestDrive {
 
     @Test
     public static void webElementCommands(){
+
         WebDriver driver = DriverFactory.newDriver();
 
-        driver.get("https://demoqa.com/text-box");
+        driver.get("https://www.tutorialspoint.com/selenium/practice/selenium_automation_practice.php");
+        driver.findElement(By.cssSelector("button[data-bs-target='#collapseOne']")).click();
+        driver.findElement(By.xpath("//a[normalize-space()='Buttons']")).click();
 
-        //WebElement textbox=driver
+        DemoHelper.pause();
+
+        // Get the current working directory
+        String currentDir = System.getProperty("user.dir");
+
+        // Print the current working directory
+        System.out.println("Current working directory: " + currentDir);
+
+        driver.close();
+
     }
+    @Test
+    public static void verifyListofElements(){
 
+        WebDriver driver= DriverFactory.newDriver();
+        driver.get("https://www.tutorialspoint.com/selenium/practice/links.php" );
+
+        List <WebElement> links = driver.findElements(By.tagName("a"));
+
+        for(WebElement link: links){
+
+            String name=link.getText();
+            if(name.equalsIgnoreCase("Bad Request")){
+                link.click();
+                String url= link.getAttribute("href");
+                System.out.println("URL: "+url);
+                break;
+            }
+
+        }
+
+        String reply = driver.findElement(By.className("brequest")).getText();
+        System.out.println("Response message is: " +reply );
+        System.out.println("List Size: " +links.size());
+
+        driver.close();
+
+    }
 }
