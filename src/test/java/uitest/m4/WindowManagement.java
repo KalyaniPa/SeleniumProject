@@ -31,6 +31,5 @@ public class WindowManagement {
         Assert.assertEquals(driver.getWindowHandles().size(), 1);
         driver.quit();
 
-
     }
 }

@@ -21,6 +21,7 @@ public class ScreenShotTest {
         driver.get(LOANS);
 
          TakesScreenshot ts =(TakesScreenshot) driver;
+
         File screenshot=ts.getScreenshotAs(OutputType.FILE);
         Path destination = Paths.get("fullPageScreen.png");
         Files.move(screenshot.toPath(),destination, StandardCopyOption.REPLACE_EXISTING);

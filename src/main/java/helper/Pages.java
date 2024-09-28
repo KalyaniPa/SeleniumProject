@@ -6,4 +6,3 @@ public class Pages {
     public static final String LOANS = prefix+"loans.html";
     public static final String SAVINGS = prefix+"savings.html";
 }
-  
